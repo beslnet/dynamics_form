@@ -1,6 +1,6 @@
 class Product < ActiveRecord::Base
 	belongs_to :product_type
-  serialize :properties, Hash
+  #serialize :properties, Hash
   
   validate :validate_properties
   

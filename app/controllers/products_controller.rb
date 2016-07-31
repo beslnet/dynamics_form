@@ -24,9 +24,8 @@ class ProductsController < ApplicationController
   # POST /products
   # POST /products.json
   def create
+    #byebug
     @product = Product.new(product_params)
-    @product.properties = params[:product][:properties]
-
     respond_to do |format|
       if @product.save
         format.html { redirect_to @product, notice: 'Product was successfully created.' }
@@ -68,12 +67,8 @@ class ProductsController < ApplicationController
       @product = Product.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    # def product_params
-    #   params.require(:product).permit(:name, :price, :product_type_id, :properties => {})
-    # end
-
     def product_params
-      params.require(:product).permit(:name, :price, :product_type_id, properties: [params[:product].try(:[],:properties)])
+      properties_key = params[:product][:properties].keys
+      params.require(:product).permit(:name, :price, :product_type_id, properties: properties_key)
     end
 end
